@@ -15,7 +15,19 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 
 //only registered users can login
 regd_users.post("/login", (req,res) => {
-  //Write your code here
+    const regd_users = express.Router();
+    regd_users.use(bodyParser.json()); // Parse JSON requests
+    
+    // In-memory user database (replace with your actual database or storage mechanism)
+    const usersDatabase = {};
+    
+    function isValidUser(username, password) {
+        const user = usersDatabase[username];
+        return user && user.password === password;
+    }
+    regd_users.post('/login', (req, res) => {
+        const { username, password } = req.body;
+        if (!username || !password) {
   return res.status(300).json({message: "Yet to be implemented"});
 });
 
